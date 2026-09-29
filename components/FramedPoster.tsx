@@ -1,16 +1,27 @@
 "use client";
+import Image from "next/image";
 
 interface Props {
   title?: string;
   placeholderColor?: string;
+  image?: string;
   className?: string;
 }
 
 export default function FramedPoster({
   title,
   placeholderColor = "#C9B49A",
+  image,
   className = "",
 }: Props) {
+  if (image) {
+    return (
+      <div className={`relative w-full h-full ${className}`}>
+        <Image src={image} alt={title ?? ""} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`w-full h-full flex items-center justify-center ${className}`}

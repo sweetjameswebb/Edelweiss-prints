@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "@/context/LanguageContext";
 import { Product } from "@/lib/data";
 
@@ -18,14 +19,18 @@ export default function ProductCard({ product, showSaleBadge = true }: Props) {
       <Link href={`/shop/${product.slug}`}>
         <div
           className="w-full aspect-[3/4] flex items-center justify-center relative"
-          style={{ backgroundColor: product.color + "33" }}
+          style={product.image ? undefined : { backgroundColor: product.color + "33" }}
         >
-          <div
-            className="w-3/4 h-3/4 rounded-lg flex items-center justify-center"
-            style={{ backgroundColor: product.color + "66" }}
-          >
-            <span className="text-white font-serif text-sm text-center px-2 leading-snug opacity-70">{name}</span>
-          </div>
+          {product.image ? (
+            <Image src={product.image} alt={name} fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover" />
+          ) : (
+            <div
+              className="w-3/4 h-3/4 rounded-lg flex items-center justify-center"
+              style={{ backgroundColor: product.color + "66" }}
+            >
+              <span className="text-white font-serif text-sm text-center px-2 leading-snug opacity-70">{name}</span>
+            </div>
+          )}
           {showSaleBadge && product.salePrice && (
             <span className="absolute top-3 left-3 bg-terracotta-500 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded-full">
               {t("sale_badge")}

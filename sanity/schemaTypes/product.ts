@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { CATEGORIES } from "./categories";
 
 export default defineType({
   name: "product",
@@ -30,6 +31,25 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "color",
+      title: "Placeholder color",
+      type: "string",
+      description: "Hex swatch used on the storefront until a product photo is uploaded, e.g. #C94B28.",
+      validation: (rule) => rule.required().regex(/^#[0-9A-Fa-f]{6}$/, { name: "hex color" }),
+    }),
+    defineField({
+      name: "category",
+      title: "Category",
+      type: "string",
+      description: "What kind of product this is. Collections only apply to the Poster category.",
+      options: {
+        list: CATEGORIES.map(({ value, title }) => ({ value, title })),
+        layout: "radio",
+      },
+      initialValue: "poster",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "price",
       title: "Price (₾)",
       type: "number",
@@ -45,6 +65,19 @@ export default defineType({
       title: "Collection",
       type: "reference",
       to: [{ type: "collection" }],
+      description: "Prints/posters only — not used by other categories.",
+      hidden: ({ parent }) => parent?.category !== "poster",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const parent = context.parent as { category?: string } | undefined;
+          if (parent?.category === "poster" && !value) {
+            return "Collection is required for posters";
+          }
+          if (parent?.category !== "poster" && value) {
+            return "Only poster products can belong to a collection";
+          }
+          return true;
+        }),
     }),
     defineField({
       name: "tags",
@@ -67,6 +100,19 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "name", subtitle: "collection.title", media: "image" },
+    select: {
+      title: "name",
+      category: "category",
+      collectionTitle: "collection.title",
+      media: "image",
+    },
+    prepare({ title, category, collectionTitle, media }) {
+      const categoryTitle = CATEGORIES.find((c) => c.value === category)?.title ?? category;
+      return {
+        title,
+        subtitle: category === "poster" && collectionTitle ? `${categoryTitle} — ${collectionTitle}` : categoryTitle,
+        media,
+      };
+    },
   },
 });

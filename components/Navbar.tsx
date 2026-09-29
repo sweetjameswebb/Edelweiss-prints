@@ -104,10 +104,10 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          <Link href="/shop?category=lanterns" className="hover:text-terracotta-500 transition-colors">{t("nav_lanterns")}</Link>
+          <Link href="/shop?category=lantern" className="hover:text-terracotta-500 transition-colors">{t("nav_lanterns")}</Link>
           <Link href="/shop?category=decor" className="hover:text-terracotta-500 transition-colors">{t("nav_decor")}</Link>
-          <Link href="/shop?category=stickers" className="hover:text-terracotta-500 transition-colors">{t("nav_stickers")}</Link>
-          <Link href="/shop?category=frames" className="hover:text-terracotta-500 transition-colors">{t("nav_frames")}</Link>
+          <Link href="/shop?category=sticker" className="hover:text-terracotta-500 transition-colors">{t("nav_stickers")}</Link>
+          <Link href="/shop?category=frame" className="hover:text-terracotta-500 transition-colors">{t("nav_frames")}</Link>
         </nav>
 
         {/* Right controls */}
@@ -158,10 +158,10 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-brown-200 px-4 py-4 flex flex-col gap-3 text-sm font-medium text-brown-700">
           <Link href="/shop" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_prints")}</Link>
-          <Link href="/shop?category=lanterns" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_lanterns")}</Link>
+          <Link href="/shop?category=lantern" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_lanterns")}</Link>
           <Link href="/shop?category=decor" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_decor")}</Link>
-          <Link href="/shop?category=stickers" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_stickers")}</Link>
-          <Link href="/shop?category=frames" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_frames")}</Link>
+          <Link href="/shop?category=sticker" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_stickers")}</Link>
+          <Link href="/shop?category=frame" onClick={() => setMenuOpen(false)} className="hover:text-terracotta-500">{t("nav_frames")}</Link>
           <hr className="border-brown-200" />
           <p className="text-xs uppercase tracking-widest text-brown-400">{lang === "en" ? "Collections" : "კოლექციები"}</p>
           {collections.map(([key, val]) => (

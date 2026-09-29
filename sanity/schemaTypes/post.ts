@@ -30,6 +30,13 @@ export default defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: "color",
+      title: "Placeholder color",
+      type: "string",
+      description: "Hex swatch used on the storefront until a cover image is uploaded, e.g. #C94B28.",
+      validation: (rule) => rule.required().regex(/^#[0-9A-Fa-f]{6}$/, { name: "hex color" }),
+    }),
+    defineField({
       name: "excerpt",
       title: "Excerpt (EN)",
       type: "text",
